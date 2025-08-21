@@ -12,7 +12,7 @@ public class CalculadoraView extends JFrame implements ActionListener {
     private String operacion;
     private boolean nuevaOperacion;
 
-    // AGREGA ESTOS COLORES LILA (PEGA ESTAS LÍNEAS)
+    // AGREGAR COLORES LILA
     private final Color COLOR_FONDO = new Color(240, 230, 250);       // Lila muy claro
     private final Color COLOR_BOTONES_NUM = new Color(220, 200, 240); // Lila medio
     private final Color COLOR_BOTONES_OP = new Color(160, 100, 200);  // Púrpura
