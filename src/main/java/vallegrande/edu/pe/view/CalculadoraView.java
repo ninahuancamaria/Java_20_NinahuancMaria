@@ -12,6 +12,14 @@ public class CalculadoraView extends JFrame implements ActionListener {
     private String operacion;
     private boolean nuevaOperacion;
 
+    // AGREGA ESTOS COLORES LILA
+    private final Color COLOR_FONDO = new Color(240, 230, 250);       // Lila muy claro
+    private final Color COLOR_BOTONES_NUM = new Color(220, 200, 240); // Lila medio
+    private final Color COLOR_BOTONES_OP = new Color(160, 100, 200);  // Púrpura
+    private final Color COLOR_TEXTO = new Color(80, 30, 120);         // Púrpura oscuro
+    private final Color COLOR_PANTALLA = new Color(250, 245, 255);    // Blanco lila
+    private final Color COLOR_IGUAL = new Color(180, 70, 220);        // Lila intenso
+
     public CalculadoraView() {
         configurarVentana();
         inicializarComponentes();
@@ -24,29 +32,55 @@ public class CalculadoraView extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        getContentPane().setBackground(COLOR_FONDO); // FONDO LILA
     }
 
     private void inicializarComponentes() {
         setLayout(new BorderLayout());
 
         pantalla = new JTextField();
-        pantalla.setFont(new Font("Arial", Font.BOLD, 24));
+        pantalla.setFont(new Font("Segoe UI", Font.BOLD, 26));
         pantalla.setHorizontalAlignment(JTextField.RIGHT);
         pantalla.setEditable(false);
         pantalla.setText("0");
+        pantalla.setBackground(COLOR_PANTALLA); // FONDO PANTALLA
+        pantalla.setForeground(COLOR_TEXTO);    // TEXTO PÚRPURA
 
         JPanel panelBotones = new JPanel(new GridLayout(4, 4, 5, 5));
+        panelBotones.setBackground(COLOR_FONDO); // FONDO PANEL
+
         String[] textosBotones = {"7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"};
 
         for (String texto : textosBotones) {
-            JButton boton = new JButton(texto);
-            boton.setFont(new Font("Arial", Font.BOLD, 18));
-            boton.addActionListener(this);
+            JButton boton = crearBotonPersonalizado(texto); //  BOTONES CON COLOR
             panelBotones.add(boton);
         }
 
         add(pantalla, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
+    }
+
+    // ✅ AGREGA ESTE MÉTODO PARA BOTONES COLORIDOS
+    private JButton crearBotonPersonalizado(String texto) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Arial", Font.BOLD, 18));
+        boton.addActionListener(this);
+        boton.setFocusPainted(false);
+
+        // ASIGNAR COLOR SEGÚN EL TIPO DE BOTÓN
+        if (texto.matches("[0-9]") || texto.equals(".")) {
+            boton.setBackground(COLOR_BOTONES_NUM); //  NÚMEROS LILA
+        } else if (texto.equals("=")) {
+            boton.setBackground(COLOR_IGUAL);       // BOTÓN LILA INTENSO
+        } else {
+            boton.setBackground(COLOR_BOTONES_OP);  // OPERADORES PÚRPURA
+        }
+
+        boton.setForeground(COLOR_TEXTO);           // TEXTO PÚRPURA
+        boton.setOpaque(true);
+        boton.setBorderPainted(false);
+
+        return boton;
     }
 
     @Override
